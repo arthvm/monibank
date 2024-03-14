@@ -1,13 +1,11 @@
-export default function isValidCPF(campo) {
-  const cpf = campo.value.replace(/\.|-/g, "");
+export default function isValidCPF(field) {
+  const cpf = field.value.replace(/\.|-/g, "");
   if (
     checkForRepeatNum(cpf) ||
     checkInvalidFirstDigit(cpf) ||
     checkInvalidSecondDigit(cpf)
   ) {
-    console.log("Esse CPF nao existe!");
-  } else {
-    console.log("Esse cpf existe!");
+    field.setCustomValidity("CPF invalido");
   }
 }
 

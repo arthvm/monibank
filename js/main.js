@@ -3,7 +3,15 @@ import isValidCPF from "./checkCPF.js";
 
 const formFields = document.querySelectorAll("[required]");
 
-const mensagens = {
+const errorTypes = [
+  "valueMissing",
+  "typeMismatch",
+  "patternMismatch",
+  "tooShort",
+  "customError",
+];
+
+const messages = {
   nome: {
     valueMissing: "O campo de nome não pode estar vazio.",
     patternMismatch: "Por favor, preencha um nome válido.",
@@ -38,12 +46,16 @@ formFields.forEach((field) => {
   field.addEventListener("blur", () => {
     checkField(field);
   });
+
   field.addEventListener("invalid", (event) => {
     event.preventDefault();
   });
 });
 
 function checkField(field) {
+  let message = "";
+  field.setCustomValidity("");
+
   switch (field.name) {
     case "cpf":
       if (field.value.length >= 11) {
@@ -56,4 +68,16 @@ function checkField(field) {
       }
       break;
   }
+
+  errorTypes.forEach((error) => {
+    if (field.validity[error]) {
+      message = messages[field.name][error];
+    }
+  });
+
+  const errorMessage = field.parentNode.querySelector(".mensagem-erro");
+
+  field.checkValidity() == true
+    ? (errorMessage.textContent = "")
+    : (errorMessage.textContent = message);
 }
