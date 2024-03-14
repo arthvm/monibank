@@ -1,7 +1,14 @@
 export default function isACPF(campo) {
   const cpf = campo.value.replace(/\.|-/g, "");
-  checkForRepeatNum(cpf);
-  checkInvalidFirstDigit(cpf);
+  if (
+    checkForRepeatNum(cpf) ||
+    checkInvalidFirstDigit(cpf) ||
+    checkInvalidSecondDigit(cpf)
+  ) {
+    console.log("Esse CPF nao existe!");
+  } else {
+    console.log("Esse cpf existe!");
+  }
 }
 
 function checkForRepeatNum(cpf) {
@@ -37,4 +44,22 @@ function checkInvalidFirstDigit(cpf) {
   }
 
   return sum != cpf[9];
+}
+
+function checkInvalidSecondDigit(cpf) {
+  let sum = 0;
+  let multiplier = 11;
+
+  for (let index = 0; index < 10; index++) {
+    sum += cpf[index] * multiplier;
+    multiplier--;
+  }
+
+  sum = (sum * 10) % 11;
+
+  if (sum == 10 || sum == 11) {
+    sum = 0;
+  }
+
+  return sum != cpf[10];
 }
