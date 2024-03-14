@@ -2,6 +2,7 @@ import isLegalAge from "./checkAge.js";
 import isValidCPF from "./checkCPF.js";
 
 const formFields = document.querySelectorAll("[required]");
+const form = document.querySelector("[data-formulario]");
 
 const errorTypes = [
   "valueMissing",
@@ -41,6 +42,20 @@ const messages = {
     valueMissing: "Você deve aceitar nossos termos antes de continuar.",
   },
 };
+
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const dataList = {
+    nome: event.target.elements["nome"].value,
+    email: event.target.elements["email"].value,
+    rg: event.target.elements["rg"].value,
+    cpf: event.target.elements["cpf"].value,
+    aniversario: event.target.elements["aniversario"].value,
+  };
+
+  localStorage.setItem("cadastro", JSON.stringify(dataList));
+  window.location.href = "./abrir-conta-form-2.html";
+});
 
 formFields.forEach((field) => {
   field.addEventListener("blur", () => {
