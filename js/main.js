@@ -1,4 +1,5 @@
-import isACPF from "./checkCPF.js";
+import isLegalAge from "./checkAge.js";
+import isValidCPF from "./checkCPF.js";
 
 const formFields = document.querySelectorAll("[required]");
 
@@ -12,7 +13,12 @@ function checkField(field) {
   switch (field.name) {
     case "cpf":
       if (field.value.length >= 11) {
-        isACPF(field);
+        isValidCPF(field);
+      }
+      break;
+    case "aniversario":
+      if (field.value != "") {
+        isLegalAge(field);
       }
       break;
   }

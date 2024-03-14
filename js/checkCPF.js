@@ -1,4 +1,4 @@
-export default function isACPF(campo) {
+export default function isValidCPF(campo) {
   const cpf = campo.value.replace(/\.|-/g, "");
   if (
     checkForRepeatNum(cpf) ||
