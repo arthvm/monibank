@@ -1,6 +1,7 @@
 export default function isACPF(campo) {
   const cpf = campo.value.replace(/\.|-/g, "");
   checkForRepeatNum(cpf);
+  checkInvalidFirstDigit(cpf);
 }
 
 function checkForRepeatNum(cpf) {
@@ -18,4 +19,22 @@ function checkForRepeatNum(cpf) {
   ];
 
   return repeatedNumbers.includes(cpf);
+}
+
+function checkInvalidFirstDigit(cpf) {
+  let sum = 0;
+  let multiplier = 10;
+
+  for (let index = 0; index < 9; index++) {
+    sum += cpf[index] * multiplier;
+    multiplier--;
+  }
+
+  sum = (sum * 10) % 11;
+
+  if (sum == 10 || sum == 11) {
+    sum = 0;
+  }
+
+  return sum != cpf[9];
 }
