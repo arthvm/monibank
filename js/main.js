@@ -70,6 +70,7 @@ formFields.forEach((field) => {
 function checkField(field) {
   let message = "";
   field.setCustomValidity("");
+  field.style.border = "2px solid var(--azul-claro)";
 
   switch (field.name) {
     case "cpf":
@@ -94,5 +95,6 @@ function checkField(field) {
 
   field.checkValidity() == true
     ? (errorMessage.textContent = "")
-    : (errorMessage.textContent = message);
+    : (errorMessage.textContent = message) &&
+      (field.style.border = "2px solid red");
 }
